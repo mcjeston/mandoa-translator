@@ -329,7 +329,10 @@ button.secondary {
 
 [data-theme="dark"] #direction,
 [data-theme="dark"] #sourceText,
+[data-theme="dark"] #grammarInput,
 [data-theme="dark"] #translationResult,
+[data-theme="dark"] #grammarAnalysis,
+[data-theme="dark"] #grammarForms,
 [data-theme="dark"] #searchInput,
 [data-theme="dark"] #matchList .entry,
 [data-theme="dark"] #results .entry {
@@ -339,6 +342,7 @@ button.secondary {
 }
 
 [data-theme="dark"] #sourceText::placeholder,
+[data-theme="dark"] #grammarInput::placeholder,
 [data-theme="dark"] #searchInput::placeholder {
   color: #89a39c;
 }
@@ -355,8 +359,11 @@ button.secondary {
 [data-theme="dark"] #matchList .entry p,
 [data-theme="dark"] #results .entry p,
 [data-theme="dark"] #translationResult,
+[data-theme="dark"] #grammarAnalysis,
+[data-theme="dark"] #grammarForms,
 [data-theme="dark"] #direction,
 [data-theme="dark"] #sourceText,
+[data-theme="dark"] #grammarInput,
 [data-theme="dark"] #searchInput {
   color: #f2f7f5;
 }
@@ -390,6 +397,23 @@ button.secondary {
   margin: 8px 0;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.grammar-input {
+  min-height: 92px;
+}
+
+.grammar-output {
+  min-height: 64px;
+}
+
+.grammar-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.grammar-list li {
+  margin: 4px 0;
 }
 
 @media (min-width: 960px) {

@@ -17,7 +17,7 @@
     {
         "mandoa":  "aay\u0027han",
         "pronunciation":  "AY-ye-haan",
-        "english":  "bittersweet perfect moment of mourning and joy - \"\"remembering and celebrating\"\""
+        "english":  "bittersweet perfect moment of mourning and joy - \"remembering and celebrating\""
     },
     {
         "mandoa":  "abesh",
@@ -242,12 +242,12 @@
     {
         "mandoa":  "ara\u0027novor",
         "pronunciation":  "ah-RAH-nov",
-        "english":  "approach, stand in the way off, block"
+        "english":  "to obstruct, defend, blockade, approach, block"
     },
     {
         "mandoa":  "ara\u0027novor",
         "pronunciation":  "AH-rah-NO-vor",
-        "english":  "obstruct, defend, bockade"
+        "english":  "to obstruct, defend, blockade, approach, block"
     },
     {
         "mandoa":  "arasuum",
@@ -332,12 +332,12 @@
     {
         "mandoa":  "at",
         "pronunciation":  "aht",
-        "english":  "to (direction, movement)"
+        "english":  "towards, to (direction, movement)"
     },
     {
         "mandoa":  "at",
         "pronunciation":  "aht",
-        "english":  "towards, at (motion), to"
+        "english":  "towards, to (direction, movement)"
     },
     {
         "mandoa":  "atin",
@@ -397,7 +397,7 @@
     {
         "mandoa":  "bah",
         "pronunciation":  "bah",
-        "english":  "to (dative)"
+        "english":  "to (dative, not used with verbs)"
     },
     {
         "mandoa":  "bajur",
@@ -492,7 +492,7 @@
     {
         "mandoa":  "be, b\u0027",
         "pronunciation":  "beh",
-        "english":  "possessive prefix or suffix with proper nouns, e.g. be\u0027jetii or (rare) jetiib -  the Jedi\u0027s. Possessives are sometimes indicated simply by the proper noun preceding the word, e.g.Boba\u0027kad - Boba\u0027s saber ."
+        "english":  "of, about; genitive or possessive. possessive prefix or suffix with proper nouns, e.g. be\u0027jetii or (rare) jetiib -  the Jedi\u0027s. Possessives are sometimes indicated simply by the proper noun preceding the word, e.g.Boba\u0027kad - Boba\u0027s saber ."
     },
     {
         "mandoa":  "be\u0027chaaj",
@@ -687,7 +687,7 @@
     {
         "mandoa":  "bralir",
         "pronunciation":  "BRAH-leer",
-        "english":  "to get the upper hand, to succeed"
+        "english":  "to succeed, get the upper hand"
     },
     {
         "mandoa":  "bralov",
@@ -732,7 +732,7 @@
     {
         "mandoa":  "brokar",
         "pronunciation":  "BROH-kar",
-        "english":  "beat, to"
+        "english":  "to beat rhythmically - like a drum or heartbeat"
     },
     {
         "mandoa":  "bu\u0027ad",
@@ -972,7 +972,7 @@
     {
         "mandoa":  "cin vhetin",
         "pronunciation":  "SEEN-fett-EEN",
-        "english":  "fresh start, clean slate - lit.  white field,  virgin snow -  term indicating  the erasing of a person\u0027s past when they become Mandalorian, and that they will only be judged by what they do from that point onwards; like the \"first turn of the screw cancel"
+        "english":  "fresh start, clean slate (lit. white field, virgin snow) - term indicating the erasing of a person\u0027s past when they become Mandalorian, and that they will only be judged by what they do from that point onwards; like the first turn of the screw cancels all debts for sailors"
     },
     {
         "mandoa":  "cinargaanar",
@@ -1082,7 +1082,7 @@
     {
         "mandoa":  "cuyir",
         "pronunciation":  "KOO-yeer",
-        "english":  "exist, be"
+        "english":  "to exist, to be"
     },
     {
         "mandoa":  "cuyla",
@@ -1127,7 +1127,7 @@
     {
         "mandoa":  "dajunar",
         "pronunciation":  "dah-JOO-nahr",
-        "english":  "plan, to plot"
+        "english":  "to plan, plot"
     },
     {
         "mandoa":  "dajun\u0027la",
@@ -1177,7 +1177,7 @@
     {
         "mandoa":  "dar\u0027manda",
         "pronunciation":  "dar-MAHN-da",
-        "english":  "a state of not being Mandalorian - not an outsider, but one who has lost his heritage, and so his identity and his soul - regarded with absolute dread by most traditionall-minded Mando\u0027ade"
+        "english":  "a state of not being Mandalorian - not an outsider, but one who has lost his heritage, and so his identity and his soul - regarded with absolute dread by most traditionally-minded Mando\u0027ade"
     },
     {
         "mandoa":  "dar\u0027tome",
@@ -1222,7 +1222,7 @@
     {
         "mandoa":  "demagolka",
         "pronunciation":  "deh-mah-GOHL-kah",
-        "english":  "someone who commits atrocties, a real-life monster, a war criminal - from the notorious Mandalorian scientist of the Old Republic, Demagol, known for his experiments on children, and a figure of hate and dread in the Mando psyche"
+        "english":  "someone who commits atrocities, a real-life monster, a war criminal - from the notorious Mandalorian scientist of the Old Republic, Demagol, known for his experiments on children, and a figure of hate and dread in the Mando psyche"
     },
     {
         "mandoa":  "demar",
@@ -1667,7 +1667,7 @@
     {
         "mandoa":  "ganar",
         "pronunciation":  "GAN-ar",
-        "english":  "possess, have"
+        "english":  "to have, possess"
     },
     {
         "mandoa":  "gar",
@@ -1717,7 +1717,7 @@
     {
         "mandoa":  "gebbar",
         "pronunciation":  "GEB-arr",
-        "english":  "close to, near to"
+        "english":  "near, close to"
     },
     {
         "mandoa":  "gebi",
@@ -1887,7 +1887,7 @@
     {
         "mandoa":  "gotal",
         "pronunciation":  "go-TAHL",
-        "english":  "made, created - as in \"-ized\" - suffix"
+        "english":  "suffix used like the English -ized (roughly made, created)"
     },
     {
         "mandoa":  "gotal\u0027ur",
@@ -1932,7 +1932,7 @@
     {
         "mandoa":  "guuror",
         "pronunciation":  "GOO-rohr",
-        "english":  "like, be fond of (of a person or creature)"
+        "english":  "to be fond of, to like"
     },
     {
         "mandoa":  "haal",
@@ -1957,7 +1957,7 @@
     {
         "mandoa":  "haar",
         "pronunciation":  "har",
-        "english":  "the - definite article - rare and emphatic"
+        "english":  "the - definite article, rare and emphatic"
     },
     {
         "mandoa":  "haaranovor",
@@ -1972,7 +1972,7 @@
     {
         "mandoa":  "haashun",
         "pronunciation":  "HAH-shoon",
-        "english":  "parchment bread - a thin sheet of bread dried to preserve it, and reconstituted in liquid. Mando ration-pack staple. Made properly, it;s so thin you can read through it, hence the name; \u0027see-bread\u0027."
+        "english":  "parchment bread. Mando ration-pack staple. A thin sheet of bread, dried to preserve it and reconstituted in liquid. Made properly, it\u0027s so thin you can almost read through it, hence the name see-bread."
     },
     {
         "mandoa":  "haast",
@@ -2612,7 +2612,7 @@
     {
         "mandoa":  "Ka\u0027ra",
         "pronunciation":  "KAY-rah",
-        "english":  "stars - ancient Mandalorian myth - ruling council of fallen kings"
+        "english":  "stars (in the sense of the ruling council of fallen kings - Mandalorian myth)"
     },
     {
         "mandoa":  "kar\u0027am",
@@ -2647,7 +2647,7 @@
     {
         "mandoa":  "karyai",
         "pronunciation":  "CAR-yai",
-        "english":  "main living room of a traditional north Mandalorian house - a single big chamber for eating, talking, resting, and even the last secure stronghold when under attack"
+        "english":  "main living room of a traditional Mandalorian house - a single big chamber for eating, talking, resting, and even the last secure stronghold when under attack"
     },
     {
         "mandoa":  "K\u0027atini!",
@@ -2707,7 +2707,7 @@
     {
         "mandoa":  "ke, k\u0027",
         "pronunciation":  "keh",
-        "english":  "imperative prefix - used as order"
+        "english":  "imperative particle - used to indicate an order"
     },
     {
         "mandoa":  "kebbur",
@@ -2722,7 +2722,7 @@
     {
         "mandoa":  "kebii\u0027tra",
         "pronunciation":  "keh-BEE-trah",
-        "english":  "sky (daytime) lit. blue sky"
+        "english":  "daytime sky (lit. blue sky)"
     },
     {
         "mandoa":  "kebise",
@@ -2862,7 +2862,7 @@
     {
         "mandoa":  "K\u0027oyacyi!",
         "pronunciation":  "Koy-AH-shee!",
-        "english":  "1. \"Cheers!\" 2. Can also mean: \"Hang in there\" or  3. \"Come back safely.\" Literally, a command; \"Stay alive!\""
+        "english":  "Cheers! Hang in there! Come back safely. (lit. Stay alive!)"
     },
     {
         "mandoa":  "kranak",
@@ -2897,7 +2897,7 @@
     {
         "mandoa":  "kyor",
         "pronunciation":  "KIE-ohr",
-        "english":  "rotting, decay"
+        "english":  "rot, decay"
     },
     {
         "mandoa":  "kyorar",
@@ -3057,7 +3057,7 @@
     {
         "mandoa":  "loras",
         "pronunciation":  "lor-AHS",
-        "english":  "meat, flesh, substance (poetic)"
+        "english":  "meat, flesh; any substance (poetic)"
     },
     {
         "mandoa":  "lor\u0027vram",
@@ -3102,7 +3102,7 @@
     {
         "mandoa":  "Mand\u0027alor",
         "pronunciation":  "MAHN-dah-lor",
-        "english":  "sole ruler"
+        "english":  "supreme ruler of the Mandalorian people"
     },
     {
         "mandoa":  "Manda\u0027yaim",
@@ -3282,7 +3282,7 @@
     {
         "mandoa":  "mircir",
         "pronunciation":  "meer-SEER",
-        "english":  "cage, lock up, capture"
+        "english":  "to lock up, capture, cage"
     },
     {
         "mandoa":  "mirci\u0027t",
@@ -3882,7 +3882,7 @@
     {
         "mandoa":  "ori\u0027skraan",
         "pronunciation":  "OH-ree-scrahn",
-        "english":  "1. a delicacy, a real treat in terms of food; 2 a blow-out meal, a feast (slang), \"big eats\""
+        "english":  "a delicacy, a blow-out meal, a feast"
     },
     {
         "mandoa":  "ori\u0027sol",
@@ -3907,7 +3907,7 @@
     {
         "mandoa":  "ori\u0027vod",
         "pronunciation":  "OH-ree-VOD",
-        "english":  "big brother, older brother, special friend"
+        "english":  "big brother, older brother, big sister, older sister, big sibling, older sibling, special friend"
     },
     {
         "mandoa":  "ori\u0027vor\u0027e",
@@ -3972,7 +3972,7 @@
     {
         "mandoa":  "Oya!",
         "pronunciation":  "OY-ah!",
-        "english":  "Many meanings: literally \"Let\u0027s hunt!\" and also \"Stay alive!\", but also \"Hoorah!\", \"Go you!\", \"Cheers!\"  Always positive and triumphant."
+        "english":  "Cheers! Hoorah! Go You! Many meanings, but always positive and triumphant (lit. Let\u0027s hunt!)"
     },
     {
         "mandoa":  "oyacyir",
@@ -4272,7 +4272,7 @@
     {
         "mandoa":  "ratiin",
         "pronunciation":  "RAH-teen",
-        "english":  "always"
+        "english":  "surprise, astonishment, amazement"
     },
     {
         "mandoa":  "rayshe\u0027a",
@@ -4307,7 +4307,7 @@
     {
         "mandoa":  "Resol\u0027nare",
         "pronunciation":  "RAY-sol NAH-ray",
-        "english":  "Six Actions, the tenets of Mando life"
+        "english":  "the six tenets of Mandalorian life (six actions/cultural expectations for all Mando\u0027ade)"
     },
     {
         "mandoa":  "ret",
@@ -4367,7 +4367,7 @@
     {
         "mandoa":  "ru, r\u0027",
         "pronunciation":  "roo",
-        "english":  "past tense prefix"
+        "english":  "past tense particle"
     },
     {
         "mandoa":  "rud",
@@ -4482,7 +4482,7 @@
     {
         "mandoa":  "sha ca\u0027nara",
         "pronunciation":  "SHAH kah-NAH-rah",
-        "english":  "specific time - literally at time, often used in questions"
+        "english":  "at the time, when"
     },
     {
         "mandoa":  "shaadlar",
@@ -4762,7 +4762,7 @@
     {
         "mandoa":  "skira",
         "pronunciation":  "SKEE-rah",
-        "english":  "settling scores, revenge. feud (different to vengeance - more personal)"
+        "english":  "settling scores, revenge, feud (different to vengeance - more personal)"
     },
     {
         "mandoa":  "skotah",
@@ -5137,7 +5137,7 @@
     {
         "mandoa":  "tion",
         "pronunciation":  "TEE-on",
-        "english":  "interrogative prefix, used for a question"
+        "english":  "interrogative particle, used for a question"
     },
     {
         "mandoa":  "Tion gar gai?",
@@ -5192,7 +5192,7 @@
     {
         "mandoa":  "to",
         "pronunciation":  "toh",
-        "english":  "join, connection"
+        "english":  "join, joint, connection"
     },
     {
         "mandoa":  "tok\u0027kad",
@@ -5402,7 +5402,7 @@
     {
         "mandoa":  "udesla",
         "pronunciation":  "oo-DESS-lah",
-        "english":  "calm (of sea etc) unflappable (of a person), serene, relaxed"
+        "english":  "calm (of the sea, etc.); unflappable (of a person); serene, relaxed"
     },
     {
         "mandoa":  "uj\u0027alayi",
@@ -5567,7 +5567,7 @@
     {
         "mandoa":  "ven",
         "pronunciation":  "vehn",
-        "english":  "future tense prefix"
+        "english":  "future tense particle - use with a verb"
     },
     {
         "mandoa":  "vencuyanir",
@@ -10521,6 +10521,96 @@
         "pronunciation":  "YOOST-ahroo-deel",
         "english":  "portion of a defined perimeter (cf. veerayl)",
         "source":  "MandoCreator-MC"
+    },
+    {
+        "mandoa":  "ba\u0027buir",
+        "pronunciation":  "BA-boo-EER",
+        "english":  "grandparent",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "cerashi",
+        "pronunciation":  "seyr-AH-shee",
+        "english":  "alternative, alternatively, alternate, alternately",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "darasuum",
+        "pronunciation":  "da-RAH-soom",
+        "english":  "eternity",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "duraan",
+        "pronunciation":  "DOO-rahn",
+        "english":  "contempt, scorn, disdain",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "emuurir",
+        "pronunciation":  "eh-MOOR-eer",
+        "english":  "to enjoy, to like",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "hibirar",
+        "pronunciation":  "baj-hib-EER",
+        "english":  "to study",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "jiriad",
+        "pronunciation":  "gee-REE-ad",
+        "english":  "chalky, ashen-faced, pale",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "kai\u0027tome",
+        "pronunciation":  "kai-TOHM-ay",
+        "english":  "meal (lit. food together)",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "K\u0027atini!",
+        "pronunciation":  "kah-TEEN-ee",
+        "english":  "Endure! Suck it up! - used as encouragement",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "kaysh",
+        "pronunciation":  "kaysh",
+        "english":  "they/them (singular), she/her, he/him",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "rayya",
+        "pronunciation":  "RAY-yah",
+        "english":  "self-confidence, confidence",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "su\u0027cuy",
+        "pronunciation":  "Soo-COO-ee",
+        "english":  "Hello!",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "Su\u0027cuy vod",
+        "pronunciation":  "Soo-COO-ee vod",
+        "english":  "Hello, vod! (vod = sibling, brother, sister; comrade, close mate)",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "vercopaanir",
+        "pronunciation":  "VAIR-koh-PAH-neer",
+        "english":  "to wish, hope",
+        "source":  "UserResolved"
+    },
+    {
+        "mandoa":  "vheh",
+        "pronunciation":  "feh",
+        "english":  "dirt, dust, soil",
+        "source":  "UserResolved"
     }
 ]
 ;

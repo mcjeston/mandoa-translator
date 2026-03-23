@@ -6,7 +6,9 @@
   const sourceTextEl = document.getElementById("sourceText");
   const translateBtn = document.getElementById("translateBtn");
   const clearBtn = document.getElementById("clearBtn");
+  const copyBtn = document.getElementById("copyBtn");
   const translationResultEl = document.getElementById("translationResult");
+  const translationSuggestionsEl = document.getElementById("translationSuggestions");
   const matchListEl = document.getElementById("matchList");
   const searchInputEl = document.getElementById("searchInput");
   const resultsEl = document.getElementById("results");
@@ -15,6 +17,23 @@
 
   const mandoaIndex = new Map();
   const englishIndex = new Map();
+  const grammarRules = window.MANDOA_GRAMMAR_RULES || {
+    verbEndings: ["ir", "ar", "ur", "or", "er"],
+    prefixes: {
+      question: ["tion"],
+      command: ["ke", "k'"],
+      negative: ["n'", "nu", "nu'", "ne"],
+      past: ["ru"],
+      future: ["ven"],
+    },
+    suffixes: {
+      plural: ["e"],
+      adjectiveOrAdverb: ["la", "yc"],
+      comparative: ["shy'a"],
+      superlative: ["ne"],
+    },
+    notes: [],
+  };
 
   function normalize(value) {
     return String(value || "")
@@ -206,6 +225,83 @@
 
     candidates.delete(key);
     return Array.from(candidates);
+  }
+
+  function expandVerbCandidate(word) {
+    if (!word || /r$/.test(word)) {
+      return word;
+    }
+    if (/[aeiou]$/.test(word)) {
+      return `${word}r`;
+    }
+    return word;
+  }
+
+  function stripKnownPrefix(word, prefixes) {
+    for (const prefix of prefixes) {
+      if (word.startsWith(prefix) && word.length > prefix.length) {
+        return word.slice(prefix.length);
+      }
+    }
+    return word;
+  }
+
+  function mandoaLookupCandidates(word) {
+    const key = normalizeWord(word);
+    if (!key) {
+      return [];
+    }
+
+    const candidates = new Set();
+    const queue = [key];
+    const visited = new Set();
+    const prefixGroups = [
+      grammarRules.prefixes?.question || [],
+      grammarRules.prefixes?.command || [],
+      grammarRules.prefixes?.negative || [],
+      grammarRules.prefixes?.past || [],
+      grammarRules.prefixes?.future || [],
+    ];
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+      if (!current || visited.has(current)) {
+        continue;
+      }
+      visited.add(current);
+
+      candidates.add(current);
+
+      prefixGroups.forEach((group) => {
+        const stripped = stripKnownPrefix(current, group);
+        if (stripped !== current) {
+          queue.push(stripped);
+        }
+      });
+
+      if (current.endsWith("e") && current.length > 2) {
+        queue.push(current.slice(0, -1));
+      }
+      if (current.endsWith("la") && current.length > 3) {
+        queue.push(current.slice(0, -2));
+      }
+      if (current.endsWith("yc") && current.length > 3) {
+        queue.push(current.slice(0, -2));
+      }
+      if (current.endsWith("shy'a") && current.length > 6) {
+        queue.push(current.slice(0, -5));
+      }
+      if (current.endsWith("ne") && current.length > 3) {
+        queue.push(current.slice(0, -2));
+      }
+    }
+
+    Array.from(candidates).forEach((candidate) => {
+      candidates.add(expandVerbCandidate(candidate));
+    });
+
+    candidates.delete(key);
+    return Array.from(candidates).filter(Boolean);
   }
 
   function isLikelyNounWord(word) {
@@ -453,35 +549,316 @@
           return fallback[0];
         }
       }
+    } else {
+      for (const candidate of mandoaLookupCandidates(key)) {
+        const fallback = mandoaIndex.get(candidate);
+        if (fallback && fallback.length > 0) {
+          return fallback[0];
+        }
+      }
     }
 
     return null;
   }
 
   function tokenTranslate(text, direction) {
+    if (direction === "mandoaToEnglish") {
+      return translateMandoaToEnglishColloquial(text);
+    }
+
     const tokens = String(text || "").match(/[A-Za-z']+|[^A-Za-z']+/g) || [];
     const matched = [];
+    const grammarActions = new Set();
+    const translatedParts = [];
 
-    const translated = tokens
-      .map((token) => {
-        if (!/^[A-Za-z']+$/.test(token)) {
-          return token;
+    for (const token of tokens) {
+      if (!/^[A-Za-z']+$/.test(token)) {
+        translatedParts.push(token);
+        continue;
+      }
+
+      if (direction === "englishToMandoa") {
+        const plain = normalizeWord(token).replace(/'/g, "");
+
+        if (["am", "is", "are", "was", "were", "be", "been", "being"].includes(plain)) {
+          grammarActions.add("Dropped English copula (be/am/is/are) to fit common Mando'a phrasing.");
+          continue;
         }
 
-        const entry = findBestEntry(token, direction);
-        if (!entry) {
-          return token;
+        if (plain === "will") {
+          grammarActions.add("Converted future auxiliary 'will' to Mando'a future prefix form ('ven').");
+          translatedParts.push("ven");
+          continue;
         }
 
-        matched.push(entry);
-        return direction === "mandoaToEnglish" ? entry.english : entry.mandoa;
-      })
-      .join("");
+        if (["not", "no", "never", "dont", "cant", "wont", "isnt", "arent", "wasnt", "werent", "didnt"].includes(plain)) {
+          grammarActions.add("Converted English negation to Mando'a negative marker ('nu'').");
+          translatedParts.push("nu'");
+          continue;
+        }
+      }
+
+      const entry = findBestEntry(token, direction);
+      if (!entry) {
+        translatedParts.push(token);
+        continue;
+      }
+
+      matched.push(entry);
+      translatedParts.push(direction === "mandoaToEnglish" ? entry.english : entry.mandoa);
+    }
+
+    let translated = translatedParts.join("");
+    if (direction === "englishToMandoa") {
+      translated = translated
+        .replace(/\s+/g, " ")
+        .replace(/\s+([,.;!?])/g, "$1")
+        .trim();
+    }
 
     return {
       text: translated,
       matched,
+      grammarActions: Array.from(grammarActions),
     };
+  }
+
+  function detectEnglishGrammarActions(source) {
+    const text = normalize(source);
+    if (!text) {
+      return [];
+    }
+
+    const actions = new Set();
+    if (/\bwill\b/.test(text)) {
+      actions.add("Converted future auxiliary 'will' to Mando'a future prefix form ('ven').");
+    }
+    if (/\b(am|is|are|was|were|be|been|being)\b/.test(text)) {
+      actions.add("Dropped English copula (be/am/is/are) to fit common Mando'a phrasing.");
+    }
+    if (/\b(not|no|never|dont|don't|cant|can't|wont|won't|isnt|isn't|arent|aren't|wasnt|wasn't|werent|weren't|didnt|didn't)\b/.test(text)) {
+      actions.add("Converted English negation to Mando'a negative marker ('nu'').");
+    }
+    if (/\?$/.test(source.trim())) {
+      actions.add("Question phrasing detected; Mando'a may use the 'tion' prefix.");
+    }
+
+    return Array.from(actions);
+  }
+
+  function cleanEnglishGloss(value) {
+    let text = String(value || "");
+    text = text.replace(/\([^)]*\)/g, " ");
+    text = text.replace(/\s-\s.*$/g, " ");
+    text = text.replace(/\blit\..*$/i, " ");
+    text = text.replace(/\s+/g, " ").trim();
+    return text;
+  }
+
+  function chooseColloquialEnglish(entry, originalWord) {
+    const word = normalizeWord(originalWord);
+    const pronounMap = {
+      ni: "I",
+      gar: "you",
+      kaysh: "they",
+      mhi: "we",
+      ibic: "this",
+      "ibi'tuur": "today",
+    };
+    if (pronounMap[word]) {
+      return pronounMap[word];
+    }
+
+    const cleaned = cleanEnglishGloss(entry?.english || "");
+    if (!cleaned) {
+      return originalWord;
+    }
+
+    const first = cleaned
+      .split(/[,;/]/)
+      .map((part) => part.trim())
+      .find(Boolean) || cleaned;
+
+    return first.replace(/^to\s+/i, "").trim();
+  }
+
+  function conjugatePast(verb) {
+    const w = normalizeSimpleWord(verb);
+    const irregular = {
+      be: "was",
+      do: "did",
+      have: "had",
+      go: "went",
+      come: "came",
+      make: "made",
+      take: "took",
+      fight: "fought",
+      know: "knew",
+      think: "thought",
+      speak: "spoke",
+      write: "wrote",
+      drive: "drove",
+      find: "found",
+      hold: "held",
+      tell: "told",
+      leave: "left",
+      feel: "felt",
+      defeat: "defeated",
+      destroy: "destroyed",
+    };
+    if (irregular[w]) {
+      return irregular[w];
+    }
+    if (/e$/.test(w)) {
+      return `${w}d`;
+    }
+    if (/[^aeiou]y$/.test(w)) {
+      return `${w.slice(0, -1)}ied`;
+    }
+    return `${w}ed`;
+  }
+
+  function translateMandoaToEnglishColloquial(text) {
+    const tokens = String(text || "").match(/[A-Za-z']+|[^A-Za-z']+/g) || [];
+    const matched = [];
+    const grammarActions = new Set();
+    const out = [];
+    let futurePending = false;
+    let pastPending = false;
+
+    function nextWord(from) {
+      for (let i = from; i < tokens.length; i += 1) {
+        if (/^[A-Za-z']+$/.test(tokens[i])) {
+          return { word: tokens[i], index: i };
+        }
+      }
+      return null;
+    }
+
+    for (let i = 0; i < tokens.length; i += 1) {
+      const token = tokens[i];
+      if (!/^[A-Za-z']+$/.test(token)) {
+        out.push(token);
+        continue;
+      }
+
+      const word = normalizeWord(token);
+      const next = nextWord(i + 1);
+      const phrase = next ? `${token} ${next.word}` : "";
+      const phraseEntry = phrase ? findBestEntry(phrase, "mandoaToEnglish") : null;
+      if (phraseEntry) {
+        matched.push(phraseEntry);
+        out.push(chooseColloquialEnglish(phraseEntry, phrase));
+        i = next.index;
+        continue;
+      }
+
+      if (word === "ven") {
+        futurePending = true;
+        grammarActions.add("Interpreted 'ven' as future tense ('will').");
+        continue;
+      }
+      if (word === "ru") {
+        pastPending = true;
+        grammarActions.add("Interpreted 'ru' as past tense.");
+        continue;
+      }
+      if (word === "nu'" || word === "nu" || word === "n'" || word === "ne") {
+        out.push("not");
+        grammarActions.add("Interpreted negative marker as 'not'.");
+        continue;
+      }
+
+      const entry = findBestEntry(token, "mandoaToEnglish");
+      if (!entry) {
+        out.push(token);
+        continue;
+      }
+
+      matched.push(entry);
+      let english = chooseColloquialEnglish(entry, token);
+      const isVerb = /^to\s+/i.test(cleanEnglishGloss(entry.english || "")) ||
+        /\b(verb|defeat|destroy|attack|fight|carry|move|act|leave|need|want)\b/i.test(cleanEnglishGloss(entry.english || ""));
+
+      if (isVerb && futurePending) {
+        english = `will ${english}`;
+        futurePending = false;
+      } else if (isVerb && pastPending) {
+        english = conjugatePast(english);
+        pastPending = false;
+      }
+
+      out.push(english);
+    }
+
+    const translated = out
+      .join("")
+      .replace(/\s+/g, " ")
+      .replace(/\s+([,.;!?])/g, "$1")
+      .trim();
+
+    return {
+      text: translated,
+      matched,
+      grammarActions: Array.from(grammarActions),
+    };
+  }
+
+  function renderTranslationSuggestions(direction, source, grammarActions) {
+    if (!translationSuggestionsEl) {
+      return;
+    }
+
+    if (direction !== "englishToMandoa") {
+      translationSuggestionsEl.textContent = "";
+      return;
+    }
+
+    if (!String(source || "").trim()) {
+      translationSuggestionsEl.textContent = "";
+      return;
+    }
+
+    if (!grammarActions || grammarActions.length === 0) {
+      translationSuggestionsEl.textContent = "";
+      return;
+    }
+
+    translationSuggestionsEl.innerHTML = grammarActions
+      .slice(0, 2)
+      .map((s) => `Applied grammar: ${escapeHtml(s)}`)
+      .join("<br>");
+  }
+
+  async function copyResultToClipboard() {
+    const text = String(translationResultEl?.textContent || "").trim();
+    if (!text) {
+      return false;
+    }
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (e) {
+      // Fallback below.
+    }
+
+    try {
+      const temp = document.createElement("textarea");
+      temp.value = text;
+      temp.setAttribute("readonly", "");
+      temp.style.position = "absolute";
+      temp.style.left = "-9999px";
+      document.body.appendChild(temp);
+      temp.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(temp);
+      return ok;
+    } catch (e) {
+      return false;
+    }
   }
 
   function entryCard(entry) {
@@ -522,9 +899,11 @@
   function translateInput() {
     const direction = directionEl.value;
     const source = sourceTextEl.value.trim();
+    const sourceActions = direction === "englishToMandoa" ? detectEnglishGrammarActions(source) : [];
 
     if (!source) {
       translationResultEl.textContent = "Enter text to translate.";
+      renderTranslationSuggestions(direction, "", []);
       matchListEl.innerHTML = "";
       return;
     }
@@ -532,12 +911,15 @@
     const wholeMatch = findBestEntry(source, direction);
     if (wholeMatch) {
       translationResultEl.textContent = direction === "mandoaToEnglish" ? wholeMatch.english : wholeMatch.mandoa;
+      renderTranslationSuggestions(direction, source, sourceActions);
       renderMatched([wholeMatch]);
       return;
     }
 
     const byToken = tokenTranslate(source, direction);
     translationResultEl.textContent = byToken.text;
+    const combinedActions = Array.from(new Set([...(sourceActions || []), ...((byToken.grammarActions || []))]));
+    renderTranslationSuggestions(direction, source, combinedActions);
     renderMatched(byToken.matched);
   }
 
@@ -573,6 +955,7 @@
       variants.add(singularize(simple));
       variants.add(pluralize(simple));
     }
+    mandoaLookupCandidates(q).forEach((v) => variants.add(v));
 
     const variantList = Array.from(variants).filter(Boolean);
 
@@ -638,7 +1021,9 @@
 
   function init() {
     buildIndexes();
-    entryCountEl.textContent = String(dictionary.length);
+    if (entryCountEl) {
+      entryCountEl.textContent = String(dictionary.length);
+    }
     renderDictionary(dictionary);
     initTheme();
 
@@ -646,8 +1031,20 @@
     clearBtn.addEventListener("click", () => {
       sourceTextEl.value = "";
       translationResultEl.textContent = "";
+      renderTranslationSuggestions(directionEl.value, "", []);
       matchListEl.innerHTML = "";
     });
+
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        const original = copyBtn.textContent;
+        const ok = await copyResultToClipboard();
+        copyBtn.textContent = ok ? "Copied" : "Copy failed";
+        window.setTimeout(() => {
+          copyBtn.textContent = original || "Copy";
+        }, 1200);
+      });
+    }
 
     sourceTextEl.addEventListener("keydown", (event) => {
       if (event.key !== "Enter") {

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mando'a Translator + Dictionary</title>
-  <link rel="stylesheet" href="styles.css?v=20260323e" />
+  <link rel="stylesheet" href="styles.css?v=20260323f" />
 </head>
 <body>
   <div class="bg-glow bg-glow-a"></div>
@@ -23,7 +23,6 @@
           <span class="theme-mode theme-mode-dark">Dark Mode</span>
         </label>
       </div>
-      <p>Built from <code>MandoaApril09.xls</code> (<span id="entryCount">0</span> entries)</p>
     </header>
 
     <section class="card translator">
@@ -47,6 +46,10 @@
 
       <label class="label">Result</label>
       <div id="translationResult" class="output"></div>
+      <div class="button-row">
+        <button id="copyBtn" class="secondary" type="button">Copy</button>
+      </div>
+      <div id="translationSuggestions" class="hint"></div>
 
       <details class="match-details">
         <summary>Matched dictionary entries</summary>
@@ -65,9 +68,11 @@
 
       <div id="results" class="results"></div>
     </section>
+
   </main>
 
-  <script src="data/dictionary.js?v=20260323e"></script>
-  <script src="app.js?v=20260323e"></script>
+  <script src="data/dictionary.js?v=20260323f"></script>
+  <script src="grammarRules.js?v=20260323f"></script>
+  <script src="app.js?v=20260323f"></script>
 </body>
 </html>
