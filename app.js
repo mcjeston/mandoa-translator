@@ -562,24 +562,54 @@
       return;
     }
 
+    const variants = new Set([q]);
+    const simple = normalizeSimpleWord(q);
+    if (simple) {
+      englishLookupCandidates(simple).forEach((v) => variants.add(v));
+      variants.add(singularize(simple));
+      variants.add(pluralize(simple));
+    }
+
+    const variantList = Array.from(variants).filter(Boolean);
+
     const filtered = dictionary.filter((entry) => {
-      return (
-        normalize(entry.mandoa).includes(q) ||
-        normalize(entry.english).includes(q) ||
-        normalize(entry.pronunciation).includes(q)
+      const mandoa = normalize(entry.mandoa);
+      const english = normalize(entry.english);
+      const pronunciation = normalize(entry.pronunciation);
+
+      return variantList.some(
+        (variant) =>
+          mandoa.includes(variant) ||
+          english.includes(variant) ||
+          pronunciation.includes(variant)
       );
     });
 
     filtered.sort((a, b) => {
-      const aExact = normalize(a.mandoa) === q || normalize(a.english) === q;
-      const bExact = normalize(b.mandoa) === q || normalize(b.english) === q;
+      const aNormM = normalize(a.mandoa);
+      const aNormE = normalize(a.english);
+      const bNormM = normalize(b.mandoa);
+      const bNormE = normalize(b.english);
+
+      const aExact = aNormM === q || aNormE === q;
+      const bExact = bNormM === q || bNormE === q;
       if (aExact && !bExact) {
         return -1;
       }
       if (!aExact && bExact) {
         return 1;
       }
-      return normalize(a.mandoa).localeCompare(normalize(b.mandoa));
+
+      const aVariantExact = variantList.some((v) => aNormM === v || aNormE === v);
+      const bVariantExact = variantList.some((v) => bNormM === v || bNormE === v);
+      if (aVariantExact && !bVariantExact) {
+        return -1;
+      }
+      if (!aVariantExact && bVariantExact) {
+        return 1;
+      }
+
+      return aNormM.localeCompare(bNormM);
     });
 
     renderDictionary(filtered);
