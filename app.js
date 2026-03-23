@@ -100,6 +100,114 @@
     return `${word}s`;
   }
 
+  function singularize(word) {
+    const irregular = {
+      children: "child",
+      people: "person",
+      men: "man",
+      women: "woman",
+      teeth: "tooth",
+      feet: "foot",
+      mice: "mouse",
+      geese: "goose",
+    };
+
+    if (irregular[word]) {
+      return irregular[word];
+    }
+    if (/[^aeiou]ies$/.test(word) && word.length > 3) {
+      return `${word.slice(0, -3)}y`;
+    }
+    if (/(ches|shes|sses|xes|zes|oes)$/.test(word) && word.length > 3) {
+      return word.slice(0, -2);
+    }
+    if (/ves$/.test(word) && word.length > 3) {
+      return `${word.slice(0, -3)}f`;
+    }
+    if (/s$/.test(word) && !/ss$/.test(word) && word.length > 2) {
+      return word.slice(0, -1);
+    }
+
+    return word;
+  }
+
+  function englishLookupCandidates(word) {
+    const key = normalizeSimpleWord(word);
+    if (!key) {
+      return [];
+    }
+
+    const candidates = new Set();
+    const irregularVerbs = {
+      has: "have",
+      does: "do",
+      is: "be",
+      was: "be",
+      were: "be",
+      am: "be",
+      are: "be",
+      went: "go",
+      gone: "go",
+      came: "come",
+      did: "do",
+      done: "do",
+      had: "have",
+      made: "make",
+      took: "take",
+      felt: "feel",
+      left: "leave",
+      knew: "know",
+      thought: "think",
+      fought: "fight",
+      spoke: "speak",
+      wrote: "write",
+      drove: "drive",
+      found: "find",
+      held: "hold",
+      told: "tell",
+    };
+
+    if (irregularVerbs[key]) {
+      candidates.add(irregularVerbs[key]);
+    }
+
+    const singular = singularize(key);
+    if (singular !== key) {
+      candidates.add(singular);
+    }
+
+    if (/ied$/.test(key) && key.length > 3) {
+      candidates.add(`${key.slice(0, -3)}y`);
+    }
+
+    if (/ed$/.test(key) && key.length > 3) {
+      const withoutEd = key.slice(0, -2);
+      candidates.add(withoutEd);
+      candidates.add(`${withoutEd}e`);
+      if (/(bb|dd|ff|gg|ll|mm|nn|pp|rr|tt)$/.test(withoutEd)) {
+        candidates.add(withoutEd.slice(0, -1));
+      }
+    }
+
+    if (/ing$/.test(key) && key.length > 4) {
+      const withoutIng = key.slice(0, -3);
+      candidates.add(withoutIng);
+      candidates.add(`${withoutIng}e`);
+      if (/(bb|dd|ff|gg|ll|mm|nn|pp|rr|tt)$/.test(withoutIng)) {
+        candidates.add(withoutIng.slice(0, -1));
+      }
+    }
+
+    if (/(ches|shes|sses|xes|zes|oes)$/.test(key) && key.length > 3) {
+      candidates.add(key.slice(0, -2));
+    } else if (/s$/.test(key) && !/ss$/.test(key) && key.length > 2) {
+      candidates.add(key.slice(0, -1));
+    }
+
+    candidates.delete(key);
+    return Array.from(candidates);
+  }
+
   function isLikelyNounWord(word) {
     if (!/^[a-z]+$/.test(word) || word.length < 2) {
       return false;
@@ -338,6 +446,15 @@
       return matches[0];
     }
 
+    if (direction === "englishToMandoa") {
+      for (const candidate of englishLookupCandidates(key)) {
+        const fallback = englishIndex.get(candidate);
+        if (fallback && fallback.length > 0) {
+          return fallback[0];
+        }
+      }
+    }
+
     return null;
   }
 
@@ -499,9 +616,23 @@
     });
 
     sourceTextEl.addEventListener("keydown", (event) => {
-      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-        translateInput();
+      if (event.key !== "Enter") {
+        return;
       }
+
+      if (event.ctrlKey || event.metaKey) {
+        event.preventDefault();
+        const start = sourceTextEl.selectionStart;
+        const end = sourceTextEl.selectionEnd;
+        const value = sourceTextEl.value;
+        sourceTextEl.value = `${value.slice(0, start)}\n${value.slice(end)}`;
+        sourceTextEl.selectionStart = start + 1;
+        sourceTextEl.selectionEnd = start + 1;
+        return;
+      }
+
+      event.preventDefault();
+      translateInput();
     });
 
     searchInputEl.addEventListener("input", runSearch);
