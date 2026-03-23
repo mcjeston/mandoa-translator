@@ -140,11 +140,13 @@ body {
 .theme-switch {
   display: inline-flex;
   align-items: center;
+  flex-wrap: nowrap;
   gap: 8px;
   font-size: 0.86rem;
   color: var(--muted);
   user-select: none;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .theme-switch input {
@@ -157,11 +159,14 @@ body {
 .theme-switch-track {
   width: 46px;
   height: 26px;
+  flex: 0 0 46px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--accent-2) 28%, #fff);
   display: inline-flex;
   align-items: center;
+  position: relative;
+  overflow: hidden;
   padding: 2px;
   transition: background 180ms ease, border-color 180ms ease;
 }
@@ -169,6 +174,9 @@ body {
 .theme-switch-knob {
   width: 20px;
   height: 20px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
@@ -298,6 +306,30 @@ button.secondary {
 .match-details summary {
   cursor: pointer;
   color: var(--accent-2);
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.match-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.match-details summary::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid currentColor;
+  transform: rotate(0deg);
+  transform-origin: 2px 50%;
+  transition: transform 140ms ease;
+}
+
+.match-details[open] summary::before {
+  transform: rotate(90deg);
 }
 
 .match-list {
@@ -329,10 +361,7 @@ button.secondary {
 
 [data-theme="dark"] #direction,
 [data-theme="dark"] #sourceText,
-[data-theme="dark"] #grammarInput,
 [data-theme="dark"] #translationResult,
-[data-theme="dark"] #grammarAnalysis,
-[data-theme="dark"] #grammarForms,
 [data-theme="dark"] #searchInput,
 [data-theme="dark"] #matchList .entry,
 [data-theme="dark"] #results .entry {
@@ -342,7 +371,6 @@ button.secondary {
 }
 
 [data-theme="dark"] #sourceText::placeholder,
-[data-theme="dark"] #grammarInput::placeholder,
 [data-theme="dark"] #searchInput::placeholder {
   color: #89a39c;
 }
@@ -359,11 +387,8 @@ button.secondary {
 [data-theme="dark"] #matchList .entry p,
 [data-theme="dark"] #results .entry p,
 [data-theme="dark"] #translationResult,
-[data-theme="dark"] #grammarAnalysis,
-[data-theme="dark"] #grammarForms,
 [data-theme="dark"] #direction,
 [data-theme="dark"] #sourceText,
-[data-theme="dark"] #grammarInput,
 [data-theme="dark"] #searchInput {
   color: #f2f7f5;
 }
@@ -428,5 +453,12 @@ button.secondary {
 
   .hero h1 {
     margin-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-top {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
