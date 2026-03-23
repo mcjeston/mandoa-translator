@@ -485,12 +485,16 @@
   }
 
   function entryCard(entry) {
+    const sourceTag = entry.source ? `<span class="tag">Source: ${escapeHtml(entry.source)}</span>` : "";
+    const inferredTag = entry.inferred ? '<span class="tag">Inferred plural</span>' : "";
+
     return `
       <article class="entry">
         <h3>${escapeHtml(entry.mandoa || "")}</h3>
         <p class="pron">${escapeHtml(entry.pronunciation || "")}</p>
         <p>${escapeHtml(entry.english || "")}</p>
-        ${entry.inferred ? '<span class="tag">Inferred plural</span>' : ""}
+        ${inferredTag}
+        ${sourceTag}
       </article>
     `;
   }

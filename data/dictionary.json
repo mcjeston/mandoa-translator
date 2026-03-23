@@ -1,4 +1,4 @@
-﻿window.MANDOA_DICTIONARY = [
+﻿[
     {
         "mandoa":  "a, a\u0027, al",
         "pronunciation":  "Ah",
@@ -10523,4 +10523,3 @@
         "source":  "MandoCreator-MC"
     }
 ]
-;
