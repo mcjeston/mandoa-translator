@@ -1,0 +1,72 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mando'a Translator + Dictionary</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-a"></div>
+  <div class="bg-glow bg-glow-b"></div>
+
+  <main class="layout">
+    <header class="hero">
+      <div class="hero-top">
+        <h1>Mando'a Translator + Dictionary</h1>
+        <label class="theme-switch" for="themeToggle" aria-label="Toggle dark mode">
+          <input id="themeToggle" type="checkbox" />
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-knob"></span>
+          </span>
+          <span class="theme-switch-label">Dark Mode</span>
+        </label>
+      </div>
+      <p>Built from <code>MandoaApril09.xls</code> (<span id="entryCount">0</span> entries)</p>
+    </header>
+
+    <section class="card translator">
+      <div class="section-head">
+        <h2>Translator</h2>
+      </div>
+
+      <label class="label" for="direction">Direction</label>
+      <select id="direction" class="field">
+        <option value="mandoaToEnglish">Mando'a to English</option>
+        <option value="englishToMandoa" selected>English to Mando'a</option>
+      </select>
+
+      <label class="label" for="sourceText">Text</label>
+      <textarea id="sourceText" class="field textarea" placeholder="Enter a word or phrase..."></textarea>
+
+      <div class="button-row">
+        <button id="translateBtn" type="button">Translate</button>
+        <button id="clearBtn" class="secondary" type="button">Clear</button>
+      </div>
+
+      <label class="label">Result</label>
+      <div id="translationResult" class="output"></div>
+
+      <details class="match-details">
+        <summary>Matched dictionary entries</summary>
+        <div id="matchList" class="match-list"></div>
+      </details>
+    </section>
+
+    <section class="card dictionary">
+      <div class="section-head">
+        <h2>Dictionary</h2>
+      </div>
+
+      <label class="label" for="searchInput">Search</label>
+      <input id="searchInput" class="field" type="text" placeholder="Search Mando'a, English, or pronunciation" />
+      <p class="hint" id="resultsCount"></p>
+
+      <div id="results" class="results"></div>
+    </section>
+  </main>
+
+  <script src="data/dictionary.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
